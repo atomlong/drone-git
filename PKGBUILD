@@ -4,7 +4,7 @@
 
 pkgname=drone-git
 _pkgname=drone
-pkgver=v3608
+pkgver=v3729
 pkgrel=1
 pkgdesc="Drone is a Continuous Integration platform built on Docker, written in Go."
 arch=('i686' 'x86_64' 'arm' 'armv6h' 'armv7h' 'aarch64')
@@ -23,8 +23,8 @@ source=('git+https://github.com/drone/drone.git'
 sha1sums=('SKIP'
           '7b5132cd845d9fb869fed3c6ceb96f6105997c35'
           '7d7da680b78a51ba11a8bc63f93b09b228f5b544'
-          '280d0933a4afd361e48a35803e38a98162fed644'
-          'b839ac23c47ba3953e619300a15660dc22ea9611')
+          '7669f9b31bc7391be1c0138845a7d2267d21999d'
+          'd88e41ed0039f466c88b14998912915ac11b5885')
 
 pkgver() {
   cd "$srcdir/$_pkgname"
