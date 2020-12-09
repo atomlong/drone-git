@@ -11,7 +11,6 @@ arch=('i686' 'x86_64' 'arm' 'armv6h' 'armv7h' 'aarch64')
 url="http://github.com/drone/drone"
 license=('Apache 2')
 makedepends=('git' 'go')
-depends=('docker')
 provides=('drone')
 conflicts=('drone')
 backup=('etc/drone/server' 'etc/drone/agent')
