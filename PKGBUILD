@@ -2,19 +2,16 @@
 # Maintainer: Chris Fordham <chris [at] fordham-nagy [dot] id [dot] au> aka flaccid
 # Contributor: Mikkel Oscar Lyderik Larsen <m at moscar dot net>
 
-pkgname=drone-git
+pkgname=('drone-server' 'drone-agent')
 _pkgname=drone
-pkgver=v3729
+pkgver=1.10.0.r3.g6af2647e
 pkgrel=1
 pkgdesc="Drone is a Continuous Integration platform built on Docker, written in Go."
 arch=('i686' 'x86_64' 'arm' 'armv6h' 'armv7h' 'aarch64')
 url="http://github.com/drone/drone"
 license=('Apache 2')
 makedepends=('git' 'go')
-provides=('drone')
-conflicts=('drone')
 backup=('etc/drone/server' 'etc/drone/agent')
-install='drone.install'
 source=('git+https://github.com/drone/drone.git'
         'drone.service'
         'drone-agent.service'
@@ -24,11 +21,11 @@ sha1sums=('SKIP'
           '7b5132cd845d9fb869fed3c6ceb96f6105997c35'
           '7d7da680b78a51ba11a8bc63f93b09b228f5b544'
           '7669f9b31bc7391be1c0138845a7d2267d21999d'
-          'd88e41ed0039f466c88b14998912915ac11b5885')
+          'f23754fe65f35c5d6e4d0b73a7b9448cfcb5e2e9')
 
 pkgver() {
   cd "$srcdir/$_pkgname"
-  echo "v"$(git rev-list --count master)
+  git describe --long --tags | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
 }
 
 prepare() {
@@ -56,25 +53,44 @@ build() {
   popd
 }
 
-package() {
+package_drone-server() {
+  pkgdesc="Drone CI - Server"
+  install='drone.install'
+  provides=('drone-server')
+  conflicts=('drone')
   # binaries
   install -Dm755 "$srcdir/$_pkgname/release/drone-server" "$pkgdir/usr/bin/drone-server"
-  install -Dm755 "$srcdir/$_pkgname/release/drone-agent" "$pkgdir/usr/bin/drone-agent"
 
   # license
   install -Dm644 "$_pkgname/LICENSE" "$pkgdir/usr/share/$_pkgname"
 
   # service
   install -Dm644 drone.service "$pkgdir/usr/lib/systemd/system/drone.service"
-  install -Dm644 drone-agent.service "$pkgdir/usr/lib/systemd/system/drone-agent.service"
 
   # config
   install -Dm644 server.conf "$pkgdir/etc/drone/server"
-  install -Dm644 agent.conf "$pkgdir/etc/drone/agent"
 
   # db path
   install -dm700 "$pkgdir/var/lib/drone"
   chown -R 633:633 "$pkgdir/var/lib/drone"
+}
+
+package_drone-agent() {
+  pkgdesc="Drone CI - Agent"
+  install='drone-agent.install'
+  provides=('drone-agent')
+  depends=('docker')
+  # binaries
+  install -Dm755 "$srcdir/$_pkgname/release/drone-agent" "$pkgdir/usr/bin/drone-agent"
+
+  # license
+  install -Dm644 "$_pkgname/LICENSE" "$pkgdir/usr/share/$_pkgname"
+
+  # service
+  install -Dm644 drone-agent.service "$pkgdir/usr/lib/systemd/system/drone-agent.service"
+
+  # config
+  install -Dm644 agent.conf "$pkgdir/etc/drone/agent"
 }
 
 # vim:set ts=2 sw=2 ft=sh et:
