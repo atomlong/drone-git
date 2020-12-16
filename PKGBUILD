@@ -1,6 +1,4 @@
-# $Id$
-# Maintainer: Chris Fordham <chris [at] fordham-nagy [dot] id [dot] au> aka flaccid
-# Contributor: Mikkel Oscar Lyderik Larsen <m at moscar dot net>
+# Maintainer: Atom Long <atom.long@hotmail.com>
 
 pkgname=('drone-server-git' 'drone-agent-git')
 _pkgname=drone
@@ -17,11 +15,11 @@ source=('git+https://github.com/drone/drone.git'
         'drone-agent.service'
         'server.conf'
         'agent.conf')
-sha1sums=('SKIP'
-          '7b5132cd845d9fb869fed3c6ceb96f6105997c35'
-          '7d7da680b78a51ba11a8bc63f93b09b228f5b544'
-          '7669f9b31bc7391be1c0138845a7d2267d21999d'
-          'f23754fe65f35c5d6e4d0b73a7b9448cfcb5e2e9')
+sha256sums=('SKIP'
+			'5be757ee7375ec0b264a0f61745a045c1a605a460b22b8ccd3d86e5cbc2764c2'
+			'afa143befcc65bd2f9cdfb0b5b2c435385eaf6ad9bd12aeec81eb060b441f007'
+			'4939f041cacbcab38aa2ea1af0fb229bc5afddfac28b8acf62f931ae632d913a'
+			'0ee9a5d644eeb13a6bfc61fde8d3926dea2527d0eb71bdfc7e683abd0c20ea51')
 
 pkgver() {
   cd "$srcdir/$_pkgname"
