@@ -2,7 +2,7 @@
 # Maintainer: Chris Fordham <chris [at] fordham-nagy [dot] id [dot] au> aka flaccid
 # Contributor: Mikkel Oscar Lyderik Larsen <m at moscar dot net>
 
-pkgname=('drone-server' 'drone-agent')
+pkgname=('drone-server-git' 'drone-agent-git')
 _pkgname=drone
 pkgver=1.10.0.r3.g6af2647e
 pkgrel=1
@@ -13,7 +13,7 @@ license=('Apache 2')
 makedepends=('git' 'go')
 backup=('etc/drone/server' 'etc/drone/agent')
 source=('git+https://github.com/drone/drone.git'
-        'drone.service'
+        'drone-server.service'
         'drone-agent.service'
         'server.conf'
         'agent.conf')
@@ -53,9 +53,9 @@ build() {
   popd
 }
 
-package_drone-server() {
+package_drone-server-git() {
   pkgdesc="Drone CI - Server"
-  install='drone.install'
+  install='drone-server.install'
   provides=('drone-server')
   conflicts=('drone')
   # binaries
@@ -65,7 +65,7 @@ package_drone-server() {
   install -Dm644 "$_pkgname/LICENSE" "$pkgdir/usr/share/$_pkgname"
 
   # service
-  install -Dm644 drone.service "$pkgdir/usr/lib/systemd/system/drone.service"
+  install -Dm644 drone-server.service "$pkgdir/usr/lib/systemd/system/drone-server.service"
 
   # config
   install -Dm644 server.conf "$pkgdir/etc/drone/server"
@@ -75,7 +75,7 @@ package_drone-server() {
   chown -R 633:633 "$pkgdir/var/lib/drone"
 }
 
-package_drone-agent() {
+package_drone-agent-git() {
   pkgdesc="Drone CI - Agent"
   install='drone-agent.install'
   provides=('drone-agent')

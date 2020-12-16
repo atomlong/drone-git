@@ -1,6 +1,6 @@
 pkgbase = drone-git
 	pkgdesc = Drone is a Continuous Integration platform built on Docker, written in Go
-	pkgver = v942
+	pkgver = 1.10.0.r3.g6af2647e
 	pkgrel = 1
 	url = http://github.com/drone/drone
 	install = drone.install
